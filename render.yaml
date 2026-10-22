@@ -1,22 +1,26 @@
 services:
   - type: worker
-    name: kahrba-telegram-bot
+    name: kahrba-bot
     runtime: python
+    plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: python app.py
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.11
       - key: BOT_TOKEN
         sync: false
-      - key: DATABASE_URL
-        fromDatabase:
-          name: kahrba-db
-          property: connectionString
       - key: ADMIN_ID
         value: "8581440068"
       - key: WELCOME_BONUS
         value: "25000"
       - key: REFERRAL_REWARD
         value: "1500"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kahrba-db
+          property: connectionString
+
 databases:
   - name: kahrba-db
     plan: free
